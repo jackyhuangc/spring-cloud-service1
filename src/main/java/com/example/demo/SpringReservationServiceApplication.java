@@ -33,8 +33,7 @@ public class SpringReservationServiceApplication {
 	@RequestMapping("/getorderbill")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String sayHelloWorld() {
-//
-//		try {
+try {
 //			// 1、获取资源文件
 //			Reader reader = Resources.getResourceAsReader("mybatisconfig.xml");
 //
