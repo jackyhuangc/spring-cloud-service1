@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+                 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+                 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 命名空间mapper,对应同名接口定义类命名空间,此值必须唯一，才能映射到对应的CURD方法 -->
+<mapper namespace="com.futures.entity.empmapper">
+	<!-- emp是在config中注册的alias别名 -->
+	<select id="queryall" resultType="emp" resultMap="empResult">
+		select *from
+		emp
+	</select>
+
+	<!-- 添加 -->
+	<!-- 添加操作并没有结果集,结果类型也没有 -->
+	<!--useGeneratedKeys="true"这个可以实现标识列的自动增长，但oracle并没不能自动增长 -->
+	<insert id="add" parameterType="emp">
+		insert into emp(empno,ename,job)
+		values(emp_sql.nextval,#{ename},#{job})
+	</insert>
+	<!-- 进行删除操作 -->
+	<!-- id的意思表示命名空间的唯一标识,与映射接口中的方法一致 -->
+	<delete id="delete" parameterType="int">
+		delete from emp where
+		empno=#{empno}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="update" parameterType="emp">
+		update emp
+		<!-- 动态的sql修改 -->
+		<set>
+			<!--test里面的值是你bean里面的变量名，而不是数据库中的字段名 -->
+			<if test="ename!=null">
+
+				ENAME=#{ename},
+			</if>
+			<if test="job!=null">
+				JOB=#{job},
+			</if>
+			<if test="mgr!=null">
+				MGR=#{mgr},
+			</if>
+			<if test="hiredate!=null">
+				HIREDATE=#{hiredate},
+			</if>
+			<if test="sal!=null">
+				SAL=#{sal},
+			</if>
+			<if test="comm!=null">
+				COMM=#{comm},
+			</if>
+			<if test="Integerno!=null">
+				DEPTNO=#{Integerno}
+			</if>
+		</set>
+		where empno=#{empno}
+	</update>
+	<resultMap type="emp" id="empResult">
+		<id column="EMPNO" property="empno" />
+		<result column="ENAME" property="ename" />
+		<result column="JOB" property="job" />
+		<result column="MGR" property="mgr" />
+		<result column="HIREDATE" property="hiredate" />
+		<result column="SAL" property="sal" />
+		<result column="COMM" property="comm" />
+		<result column="DEPTNO" property="Integerno" />
+	</resultMap>
+</mapper>

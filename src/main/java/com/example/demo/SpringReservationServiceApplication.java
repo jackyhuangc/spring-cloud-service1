@@ -34,7 +34,8 @@ import com.futures.entity.TerminalDistribution;
 import com.futures.entity.TerminalDistributionMapper;
 
 @RestController
-// ttt
+// tttxxx
+//sfs
 //@EnableDiscoveryClient
 @SpringBootApplication
 @EnableAutoConfiguration(exclude = { DataSourceAutoConfiguration.class })
