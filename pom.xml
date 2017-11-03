@@ -47,6 +47,12 @@
 		</dependency>
 
 		<dependency>
+			<!-- 使用 Jetty 而不是默认的 Tomcat 作为应用服务器。 -->
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jetty</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
 			<version>3.4.1</version>

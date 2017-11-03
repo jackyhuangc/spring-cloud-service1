@@ -27,12 +27,14 @@
 				<!-- 2.数据库连接地址：oracle.jdbc.driver.OracleDriver <property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl" 
 					/> -->
 				<!-- <property name="url" value="jdbc:mysql://localhost:3306/test" /> -->
+				<!-- <property name="url" value="jdbc:sqlserver://127.0.0.1;instanceName=SQLEXPRESS;databaseName=test;" 
+					/> -->
 				<property name="url"
-					value="jdbc:sqlserver://127.0.0.1;instanceName=SQLEXPRESS;databaseName=test;" />
+					value="jdbc:sqlserver://101.204.240.20;databaseName=test;" />
 				<!-- 数据库用户... -->
 				<property name="username" value="sa" />
 				<!-- 数据库密码... -->
-				<property name="password" value="123456" />
+				<property name="password" value="scwj.123" />
 			</dataSource>
 		</environment>
 	</environments>

@@ -34,9 +34,7 @@ import com.futures.entity.TerminalDistribution;
 import com.futures.entity.TerminalDistributionMapper;
 
 @RestController
-// tttxxx
-//sfs
-//@EnableDiscoveryClient
+@EnableDiscoveryClient
 @SpringBootApplication
 @EnableAutoConfiguration(exclude = { DataSourceAutoConfiguration.class })
 public class SpringReservationServiceApplication {
