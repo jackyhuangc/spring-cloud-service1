@@ -14,12 +14,15 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.futures.entity.AccountSettle;
@@ -39,6 +42,9 @@ import com.futures.entity.TerminalDistributionMapper;
 @EnableAutoConfiguration(exclude = { DataSourceAutoConfiguration.class })
 public class SpringReservationServiceApplication {
 
+	@Autowired
+	private KafkaSender service;
+	
 	@RequestMapping("/hello")
 	String index() {
 		return "Hello Spring Boot";
@@ -47,6 +53,15 @@ public class SpringReservationServiceApplication {
 	@RequestMapping("/hello2")
 	String index2(String str) {
 		return "Hello Spring Boot" + str;
+	}
+
+	// 这是rest风格写法，用@PathVariable绑定对应的参数
+	@RequestMapping(value = "/send/{msg}", method = RequestMethod.GET)
+	public void send(@PathVariable("msg") String msg) {
+
+		System.out.println("message:"+msg);
+		service.sendMessage(msg);
+		//return "xff";
 	}
 
 	@GET
