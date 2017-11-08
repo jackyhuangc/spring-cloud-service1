@@ -2,12 +2,12 @@ package com.example.demo;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -16,8 +16,8 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
+//import org.joda.time.DateTime;
+//import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,7 +26,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+//import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -82,7 +82,7 @@ public class SpringReservationServiceApplication {
 	// }
 
 	@RequestMapping("/hello2")
-	String index2(String str) {
+	String index2(String str,String begin) {
 
 		PageRequest pageRequest = new PageRequest(0, 999999, new Sort(Direction.ASC, "id"));
 		Page<InstrumentMarketData> list = instrumentMDRepository.findByInstrumentIDLike(str, pageRequest);
@@ -95,13 +95,22 @@ public class SpringReservationServiceApplication {
 
 		// List<InstrumentMarketData> list2 = instrumentMDRepository.findAll();
 
-		DateTime dt1 = new DateTime();// 取得当前时间
-
 		// 根据指定格式,将时间字符串转换成DateTime对象,这里的格式和上面的输出格式是一样的
-		DateTime beginTime = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss").parseDateTime("2017-06-22 21:02:00");
-		DateTime endTime = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss").parseDateTime("2017-06-22 21:02:00");
+		// DateTime beginTime = DateTimeFormat.forPattern("yyyy-MM-dd
+		// HH:mm:ss").parseDateTime("2017-06-22 21:02:00");
+		// DateTime endTime = DateTimeFormat.forPattern("yyyy-MM-dd
+		// HH:mm:ss").parseDateTime("2017-06-22 21:02:00");
 
-		list = instrumentMDRepository.findByModifyTimeBetween(beginTime, endTime, pageRequest);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		Date date = new Date();
+		try {
+			date = sdf.parse(begin);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		list = instrumentMDRepository.findByModifyTimeBetween(date, date, pageRequest);
 
 		List<InstrumentMarketData> list2 = list.getContent();
 

@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -18,15 +20,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 //@RunWith(SpringRunner.class)
 //@SpringBootTest
 public class SpringReservationServiceApplicationTests {
-	//@Autowired
+	// @Autowired
 	private InstrumentMarketDataDao instrumentMDRepository;
 
-	//@Autowired
+	// @Autowired
 	private MTestDataDao mTestDataDao;
-	
-	//@Test
+
+	// @Test
 	public void contextLoads() {
-		String str="c";
+		String str = "c";
 		PageRequest pageRequest = new PageRequest(0, 999999, new Sort(Direction.ASC, "id"));
 		Page<InstrumentMarketData> list = instrumentMDRepository.findByInstrumentIDLike(str, pageRequest);
 		System.out.println(str + " " + list.getContent().size());
@@ -38,13 +40,21 @@ public class SpringReservationServiceApplicationTests {
 
 		// List<InstrumentMarketData> list2 = instrumentMDRepository.findAll();
 
-		DateTime dt1 = new DateTime();// 取得当前时间
-
 		// 根据指定格式,将时间字符串转换成DateTime对象,这里的格式和上面的输出格式是一样的
-		DateTime beginTime = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss").parseDateTime("2017-06-22 21:02:00");
-		DateTime endTime = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss").parseDateTime("2017-06-22 21:02:00");
+		// DateTime beginTime = DateTimeFormat.forPattern("yyyy-MM-dd
+		// HH:mm:ss").parseDateTime("2017-06-22 21:02:00");
+		// DateTime endTime = DateTimeFormat.forPattern("yyyy-MM-dd
+		// HH:mm:ss").parseDateTime("2017-06-22 21:02:00");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		Date begin = new Date();
+		try {
+			begin = sdf.parse("2017-06-22 21:02:00");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-		list = instrumentMDRepository.findByModifyTimeBetween(beginTime, endTime, pageRequest);
+		list = instrumentMDRepository.findByModifyTimeBetween(begin, begin, pageRequest);
 
 		List<InstrumentMarketData> list2 = list.getContent();
 
