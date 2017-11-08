@@ -5,6 +5,7 @@ import java.util.Date;
 
 import org.joda.time.DateTime;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 
 public class OrderBillEntity {
@@ -12,8 +13,9 @@ public class OrderBillEntity {
 	private String InvestorID;
 	private int Direction;
 	private int TradeType;
-	private double OrderPrice;
-	private double OrderVolume;
+	//decimal这种标准数据类型。	其区别在于，float，double等非标准类型，在DB中保存的是近似值，而Decimal则以字符串的形式保存数值
+	private BigDecimal OrderPrice;
+	private BigDecimal OrderVolume;
 	private Date OrderTime;
 
 	public String getInstrumentID() {
@@ -48,19 +50,19 @@ public class OrderBillEntity {
 		TradeType = tradeType;
 	}
 
-	public double getOrderPrice() {
+	public BigDecimal getOrderPrice() {
 		return OrderPrice;
 	}
 
-	public void setOrderPrice(double orderPrice) {
+	public void setOrderPrice(BigDecimal orderPrice) {
 		OrderPrice = orderPrice;
 	}
 
-	public double getOrderVolume() {
+	public BigDecimal getOrderVolume() {
 		return OrderVolume;
 	}
 
-	public void setOrderVolume(double orderVolume) {
+	public void setOrderVolume(BigDecimal orderVolume) {
 		OrderVolume = orderVolume;
 	}
 
